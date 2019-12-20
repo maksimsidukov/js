@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    //Кол-во дней до Нового Года
+    function daysUntilNewYear(){
+        let date = new Date(Date.now());
+        let newYearDate = new Date(date.getFullYear() + 1, 0, 1);
+        return(Math.trunc((newYearDate - date)/(60*60*24*1000)));
+    }
+    //Разворачивает строку
+    function reverse(str) {
+        return(str.split('').reverse().join(""));
+    }
+    //Проверяет вляеться ли ключ prop объекта obj числом
+    function containsNumber(obj, prop){
+        if(obj !== null && typeof(obj) === "object"){
+            if(obj[prop] && typeof(obj[prop]) === "number"){
+                return true;
+            }
+        }
+        return false;
+    }
+    //Делает из объекта строку похожую на файл .properties
+    function serialize(obj) {
+        if(typeof(obj) === "object"){
+            let result = '';
+            for(let key in obj){
+                result += `${key} = ${obj[key]}\n`;
+            }
+            return(result);
+        }
+    }
+</script>
+</html>
