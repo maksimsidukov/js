@@ -29,7 +29,7 @@
     }
     //Делает из объекта строку похожую на файл .properties
     function serialize(obj) {
-        if(typeof(obj) === "object"){
+        if(obj !== null && typeof(obj) === "object"){
             let result = '';
             for(let key in obj){
                 result += `${key} = ${obj[key]}\n`;
