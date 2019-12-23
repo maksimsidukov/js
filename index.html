@@ -126,7 +126,6 @@
    // использовать операцию '+'. (Example: F([4, 3, '+'], '*',  [2, 5, '-'], [4,6, '+'] )).
    function calculator3(){
        let result = [];
-       let finalResult = [];
        for(arr of arguments){
            if(typeof(arr) === 'string')
                result.push(arr);
@@ -134,16 +133,65 @@
                result.push(calculator(arr[0], arr[1], arr[2]))
            }
        }
-       console.log(result);
-       for(let i = 0; i < result.length; i += 2){
-           if(typeof(result[i] === typeof(result[i+1]))){
-                finalResult.push(result[i], '+', result[i+1]);
+       result = addPlus(result);
+       result = solveArray(result);
+       return result;
+   }
+
+    //Добавляет '+', между двумя рядом стоящими массивами
+   function addPlus(arr){
+       let result = [];
+       let start = true;
+       for(i in arr){
+           if(start) {
+               result.push(arr[i]);
+               start = false;
+           }
+           else if(typeof(arr[i]) === 'string'){
+               result.push(arr[i]);
            }
            else{
-                finalResult.push(result[i], result[i+1]) ;
+               if(typeof(arr[i-1]) === 'string'){
+                   result.push(arr[i]);
+               }
+               else{
+                   result.push('+', arr[i]);
+               }
            }
-           console.log(finalResult);
        }
+       return result;
+   }
+
+   //Ходит по списку и выдает результат всех действий
+   function solveArray(arr){
+       let result = 0;
+       let start = true;
+       for(let i = 0; i < arr.length; i++){
+           if(start){
+               result = arr[i];
+               start = false;
+           }
+           else if(typeof(arr[i]) === 'string'){
+               switch (arr[i]) {
+                   case '+':
+                       result += arr[i+1];
+                       break;
+                   case '-':
+                       result -= arr[i+1];
+                       break;
+                   case '*':
+                       result *= arr[i+1];
+                       break;
+                   case '/':
+                       result /= arr[i+1];
+                       break;
+                   case '^':
+                       result **= arr[i+1];
+                       break;
+               }
+           }
+       }
+       return result;
    }
 
 
@@ -242,5 +290,310 @@
         }
         return count;
    }
+
+
+   //Задание 8
+
+
+   // В одном городе есть электрическая сеть. К ней могут быть подключены:
+   // электростанции, вырабатывают мощность от 1 до 100 мегаватт
+   // солнечные панели, генерируют от 1 до 5 мегаватт днем (в зависимости от вида панели, то есть некоторые панели генерируют 1 мегаватт, некоторые 2 и так далее) и 0 ночью
+   // жилые дома, в них от 1 до 400 квартир, потребляют 4 кВт на квартиру днем и 1 кВт ночью.
+   // линии электропередач, ведущие в другие города, по ним может подаваться недостающая или отдаваться лишняя энергия.
+   // У линий есть свойство «мощность», которая определяет, сколько мегаватт можно передать по ней, а также «цена мегаватта»,
+   // которое показывает сколько можно получить или придется заплатить за переданный/полученный мегаватт. На разных линиях может быть разная цена.
+   // Дан список всех элементов электросети. Напиши программу, рассчитывющую, сколько электричества необходимо закупить
+   // (или можно продать) днем и ночью для обеспечения баланса и сколько это будет стоить (или принесет прибыли).
+   // Используй продвинутый ООП подход для решения задачи.
+
+    class City{
+        constructor(name, powerStation=[], solarPanels=[], houses=[], powerLines=[]) {
+            this.name = name;
+            this.powerStations = powerStation;
+            this.solarPanels = solarPanels;
+            this.houses = houses;
+            this.powerLines = powerLines;
+            this.dayCityPrice = 0;
+            this.nightCityPrice = 0;
+        }
+
+        //Добавление электростанций
+        addPowerStations(powerStation){
+            if(powerStation instanceof PowerStation){
+                this.powerStations.push(powerStation)
+            }
+            else{
+                console.log('Функция "addPowerStations" принимает только объекты класса "PowerStation"');
+            }
+        }
+
+        //Добавление солнечных панелей
+        addSolarPanel(solarPanel){
+            if(solarPanel instanceof SolarPanel){
+                this.solarPanels.push(solarPanel)
+            }
+            else{
+                console.log('Функция "addSolarPanel" принимает только объекты класса "SolarPanel"');
+            }
+        }
+
+        //Добавление домов
+        addHouse(house){
+            if(house instanceof House){
+                this.houses.push(house)
+            }
+            else{
+                console.log('Функция "addHouse" принимает только объекты класса "House"');
+            }
+        }
+
+        //Добавление электросети
+        addPowerLine(powerLine){
+            if(powerLine instanceof PowerLine){
+                this.powerLines.push(powerLine);
+                //Сортируеться список электросетей(вначале с большей ценой)
+                this.powerLines.sort(function(a, b){
+                    if(a.price < b.price){
+                        return 1;
+                    }
+                    if(a.price === b.price){
+                        return 0;
+                    }
+                    if(a.price > b.price){
+                        return -1;
+                    }
+                });
+            }
+            else{
+                console.log('Функция "addPowerLine" принимает только объекты класса "PowerLine"');
+            }
+        }
+
+        //Расчет вырабатываемой энергии
+        energyGenerated(){
+            this.dayEnergyGenerated = 0;
+            this.nightEnergyGenerated = 0;
+            for(this.powStat of this.powerStations){
+                this.dayEnergyGenerated += this.powStat.power;
+                this.nightEnergyGenerated += this.powStat.power;
+            }
+            for(this.solPanel of this.solarPanels){
+                this.dayEnergyGenerated += this.solPanel.power;
+            }
+        }
+
+        //Расчет потребляемой энергии
+        energyConsumed(){
+            this.dayEnergyConsumed = 0;
+            this.nightEnergyConsumed = 0;
+            for(this.house of this.houses){
+                this.dayEnergyConsumed += this.house.dayEnergyConsumption;
+                this.nightEnergyConsumed += this.house.nightEnergyConsumption;
+            }
+        }
+
+        //Оценка энергетической ситуации(сколько излишек/нехватка)
+        energySituation(){
+            this.dayEnergySituaion = this.dayEnergyGenerated - this.dayEnergyConsumed;
+            this.nightEnergySituation = this.nightEnergyGenerated - this.nightEnergyConsumed
+        }
+
+        //Возможности электросетей
+        opportunitiesPowerLines(){
+            this.opportunitiesPowerLine = 0;
+            for(this.powLine of this.powerLines){
+                this.opportunitiesPowerLine += this.powLine.power;
+            }
+        }
+
+        //Хватит ли электросетей для закупки/продажи электричества
+        decisionSituation(){
+            if(this.opportunitiesPowerLine > Math.abs(this.dayEnergySituaion) && this.opportunitiesPowerLine > Math.abs(this.nightEnergySituation)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        //Расчет стоимости(при закупке большая часть пытаеться закупиться по наименьшей стоимости, при продаже наоборот)
+        costElectricity(){
+            if(this.dayEnergySituaion >= 0){
+                let i = 0;
+                let dayLeftoverEnergy = this.dayEnergySituaion;
+                while(dayLeftoverEnergy !== 0){
+                    if(this.powerLines[i].power > dayLeftoverEnergy){
+                        this.dayCityPrice += dayLeftoverEnergy * this.powerLines[i].price;
+                        dayLeftoverEnergy = 0;
+                    }
+                    else{
+                        this.dayCityPrice += powerLines[i].power * this.powerLines[i].price;
+                        dayLeftoverEnergy -= powerLines[i].power;
+                        i++;
+                    }
+                }
+            }
+            if(this.dayEnergySituaion < 0){
+                let i = 0;
+                let dayLeftoverEnergy = this.dayEnergySituaion;
+                while(dayLeftoverEnergy !== 0){
+                    if(this.powerLines[this.powerLines.length - i - 1].power > dayLeftoverEnergy){
+                        this.dayCityPrice += dayLeftoverEnergy * this.powerLines[this.powerLines.length - i - 1].price;
+                        dayLeftoverEnergy = 0;
+                    }
+                    else{
+                        this.dayCityPrice += powerLines[i].power * this.powerLines[this.powerLines.length - i - 1].price;
+                        dayLeftoverEnergy -= powerLines[i].power;
+                        i++;
+                    }
+                }
+            }
+
+
+            if(this.nightEnergySituation >= 0){
+                let i = 0;
+                let nightLeftoverEnergy = this.nightEnergySituation;
+                while(nightLeftoverEnergy !== 0){
+                    if(this.powerLines[i].power > nightLeftoverEnergy){
+                        this.nightCityPrice += nightLeftoverEnergy * this.powerLines[i].price;
+                        nightLeftoverEnergy = 0;
+                    }
+                    else{
+                        this.nightCityPrice += powerLines[i].power * this.powerLines[i].price;
+                        nightLeftoverEnergy -= powerLines[i].power;
+                        i++;
+                    }
+                }
+            }
+            if(this.nightEnergySituation < 0){
+                let i = 0;
+                let nightLeftoverEnergy = this.nightEnergySituation;
+                while(nightLeftoverEnergy !== 0){
+                    if(this.powerLines[this.powerLines.length - i - 1].power > nightLeftoverEnergy){
+                        this.nightCityPrice += nightLeftoverEnergy * this.powerLines[this.powerLines.length - i - 1].price;
+                        nightLeftoverEnergy = 0;
+                    }
+                    else{
+                        this.nightCityPrice += powerLines[i].power * this.powerLines[this.powerLines.length - i - 1].price;
+                        nightLeftoverEnergy -= powerLines[i].power;
+                        i++;
+                    }
+                }
+            }
+
+        }
+
+        //Функция которая сама выполняет все функции по расчетам и выводит результат в консоль
+        cityAnalysis(){
+            this.energyGenerated();
+            this.energyConsumed();
+            this.energySituation();
+            this.opportunitiesPowerLines();
+            this.costElectricity();
+            console.log(`Город ${this.name} вырабатывает ${this.dayEnergyGenerated}кВт днем и ${this.nightEnergyGenerated}кВт ночью!`);
+            console.log(`Расходует днем ${this.dayEnergyConsumed}кВт, ночью ${this.nightEnergyConsumed}кВт`);
+            console.log(`Ситуация: Днем ${this.dayEnergySituaion}, ночью ${this.nightEnergySituation}`);
+            console.log(`Возможности электросетей ${this.opportunitiesPowerLine}`);
+            if(this.decisionSituation()){
+                console.log('Электросетей для покупки/продажи хватит!')
+            }
+            else{
+                console.log('Электросетей для покупки/продажи НЕ хватит!')
+            }
+            console.log(`Затраты/заработок: Днем ${this.dayCityPrice}, ночью ${this.nightCityPrice}`)
+        }
+    }
+
+    //Энергия вводится в мегаваттах
+    class PowerStation{
+       constructor(power) {
+           this.power = power*1000
+       }
+    }
+
+   //Энергия вводится в мегаваттах
+    class SolarPanel{
+       constructor(power) {
+           this.power = power * 1000
+       }
+    }
+
+   //Энергия вводится в киловаттах
+    class House{
+       constructor(quantityApartments) {
+           this.quantityApartments = quantityApartments;
+           this.dayEnergyConsumption = quantityApartments * 4;
+           this.nightEnergyConsumption = quantityApartments;
+       }
+    }
+
+   //Энергия вводится в мегаваттах
+    class PowerLine{
+       constructor(power, price) {
+           this.power = power * 1000;
+           this.price = price;
+       }
+    }
+
+    city = new City('Москва');
+
+    PowStat1 = new PowerStation(100);
+    PowStat2 = new PowerStation(100);
+    SolPanel1 = new SolarPanel(2);
+    SolPanel2 = new SolarPanel(3);
+    //Дома с таким количеством квартир что бы не создавать много домов
+    house1 = new House(2000);
+    house2 = new House(10000);
+    powLine1 = new PowerLine(1000, 15);
+    powLine2 = new PowerLine(500, 20);
+
+    city.addPowerStations(PowStat1);
+    city.addPowerStations(PowStat2);
+    city.addSolarPanel(SolPanel1);
+    city.addSolarPanel(SolPanel2);
+    city.addHouse(house1);
+    city.addHouse(house2);
+    city.addPowerLine(powLine1);
+    city.addPowerLine(powLine2);
+    city.cityAnalysis();
+
+
+
+    //Задание 9
+
+
+    function myTypeof(obj){
+        switch(typeof (obj)){
+            case "undefined":
+                return 'undefined';
+            case "boolean":
+                return 'boolean';
+            case "number":
+                return 'number';
+            case "string":
+                return 'string';
+            case "function":
+                return "function";
+            case "object":
+                if(obj === null) {
+                    return "null"
+                }
+                else if(obj instanceof Array) {
+                    return "arra";
+                }
+                else if(typeof(obj.callee) === 'function'){
+                    return "array-like";
+                }
+                else{
+                    return "object";
+                }
+        }
+    }
+
+    function c(){
+        console.log(myTypeof(arguments));
+    }
+
+
 </script>
 </html>
