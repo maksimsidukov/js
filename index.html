@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+
+
+
+   //Задание 1
+
+
+
+   // A. Написать функцию, которая будет принимать строку и на выходе будет отоброжаться стока без пробелов. (Example: F('Hello World'))
+    function noSpace(str){
+        if(typeof (str) !== 'string')
+            return "Input not string";
+        return str.split(" ").join("");
+    }
+    //B. Расширить написанную функцию, следующим образом: на вход теперь будет приходить строка и
+    //символ который должен быть исключен из данной строки, на выходе обработанная строка. (Example: F('Hello World', 'e'))
+   function noSymbol(str, symbol){
+       if(typeof (str) !== 'string')
+           return "Input not string";
+       return str.split(`${String(symbol)}`).join("");
+   }
+   // C. Расширить написанную функцию следующим образом: на вход теперь будет приходить строка и массив
+   // символов которые должны быть исключены из строки, на выходе обработанная строка. (Example: F('Hello World', ['e', 'o']))
+   function noCharacters(str, characters){
+       if(typeof (str) !== 'string')
+           return "Input not string";
+       for (symbol of characters){
+           str.split(`${symbol}`).join('');
+       }
+       return str;
+   }
+
+
+
+   //Задание 2
+
+
+
+   //A. Написать функцию, которая будет принимать на вход массив целых чисел, на выходе будет массив отсортированный по возрастанию. (Example: F([4, 3, 2, 1]))
+    function sort(numbers) {
+        return numbers.sort();
+    }
+   //B. Расширить написанную функцию, на вход будет приниматься массив целых чисел
+   // и способ сортировки. (Example: F([4, 3, 2, 1], 'ascending(по возрастанию)/descending(по убыванию)/none(отсутсвует).'))
+   function sort2(numbers, way) {
+        if(way.toLowerCase() === 'ascending'){
+            return numbers.sort(function (a, b) {return a - b;});
+        }
+        else if(way.toLowerCase() === 'descending'){
+            return numbers.sort(function(a, b) {return b - a});
+        }
+        else if(way.toLowerCase() === 'none'){
+            return numbers;
+        }
+        else{
+            return 'way not correct';
+        }
+   }
+   //C. Расширить написанную функцию, на вход будет приниматься массив чисел, способ сортировки
+   // и фильтр (использовать только целые числа (integer), только дробные числа (double)
+   // или любые числа (any))  (Example: F([4, 3, 2, 1], 'ascending', 'integer' ))
+
+   function filt(numbers, filter){
+       if(filter.toLowerCase() === 'integer'){
+           return numbers.filter(item => parseInt(item) === item);
+       }
+       else if(filter.toLowerCase() === 'double'){
+           return numbers.filter(item => parseInt(item) !== item);
+       }
+       else if(filter.toLowerCase() === 'any'){
+           return numbers;
+       }
+       else{
+           return 'filter not correct';
+       }
+   }
+
+   function sort3(numbers, way, filter) {
+       numbers = filt(numbers, filter);
+       numbers = sort2(numbers, way);
+       return numbers
+   }
+
+
+
+   //Задание 3
+
+
+
+    //A. Написать функцию, которая будет принимать два числа и операцию
+    //( +, -, *, /, ^), на выходе результат операции. (Example: F(4, 3, '+' ))
+    function calculator(num1, num2, operator){
+        switch (operator) {
+            case '+':
+                return num1 + num2;
+            case '-':
+                return num1 - num2;
+            case '*':
+                return num1 * num2;
+            case '/':
+                return num1 / num2;
+            case '^':
+                return num1 ** num2;
+        }
+    }
+    //B. Расширить функцию, на вход будет приходить массив из массивов, где два
+   // числа и операция, на выходе массив с результатом каждой операции. (Example: F([4, 3, '+'], [2, 5, '-'] ))
+   function calculator2(){
+        let result = [];
+        for(arr of arguments){
+            result.push(calculator(arr[0], arr[1], arr[2]))
+        }
+        return result;
+   }
+    //C. Расширить функцию, помимо массивов с двумя числами и операцией, в массиве может присутствовать операция,
+   // если операции между двумя элементами массива отсутствует
+   // использовать операцию '+'. (Example: F([4, 3, '+'], '*',  [2, 5, '-'], [4,6, '+'] )).
+   function calculator3(){
+       let result = [];
+       let finalResult = [];
+       for(arr of arguments){
+           if(typeof(arr) === 'string')
+               result.push(arr);
+           else{
+               result.push(calculator(arr[0], arr[1], arr[2]))
+           }
+       }
+       console.log(result);
+       for(let i = 0; i < result.length; i += 2){
+           if(typeof(result[i] === typeof(result[i+1]))){
+                finalResult.push(result[i], '+', result[i+1]);
+           }
+           else{
+                finalResult.push(result[i], result[i+1]) ;
+           }
+           console.log(finalResult);
+       }
+   }
+
+
+
+   //Задание 4
+
+
+
+   class ToolStore{
+
+        constructor(name, type='all', numberSeats) {
+            this.name = name;
+            this.type = type;
+            this.tools = [];
+            this.numberSeats = numberSeats;
+        }
+
+        toolList(){
+            return this.tools;
+        }
+
+        addTool(tool, typeTool){
+            if(this.numberSeats !== 0) {
+                if (this.type.indexOf(typeTool) >= 0 || this.type === "all") {
+                    this.tools.push(tool);
+                    this.numberSeats--;
+                    console.log(`Интсрумент ${tool} добавлен. Осталось ${this.numberSeats} мест!`);
+                }
+                else {
+                    console.log(`Тип инструмента не соответствует типу хранилища! Допустимы типы\n${this.type}`);
+                }
+            }
+            else{
+                console.log('Мест нет')
+            }
+        }
+
+        deleteTool(tool){
+            if(this.tools.indexOf(tool) >= 0){
+                this.tools.splice(this.tools.indexOf(tool), 1);
+                this.numberSeats++;
+                console.log(`Интсрумент ${tool} убран. Осталось ${this.numberSeats} мест!`);
+            }
+            else{
+                console.log('tool is not in storage')
+            }
+        }
+   }
+
+   tools1 = new ToolStore('tools','all', 10);
+
+
+
+   //Задание 5
+
+
+   //Напиши функцию создания генератора sequence(start, step). Она при вызове возвращает другую функцию-генератор,
+   // которая при каждом вызове дает число на 1 больше, и так до бесконечности. Начальное число, с которого начинать отсчет,
+   // и шаг, задается при создании генератора. Шаг можно не указывать, тогда он будет
+   // равен одному. Начальное значение по умолчанию равно 0. Генераторов можно создать сколько угодно.
+
+   function sequence(start=0, step=1) {
+        let _start = start;
+        let _step = step;
+        return function () {
+            return _start += _step;
+        }
+   }
+
+
+
+   //Задание 6
+
+
+   //напиши функцию pluck, которая берет массив объектов и возвращает массив значений определенного поля
+
+   function pluck(arr, key) {
+        let result = [];
+        for(i of arr){
+            result.push(i[key]);
+        }
+        return result;
+   }
+
+
+
+   //Задание 7
+
+
+   //Напиши функцию, считающую число свойств в объекте:
+
+   function count(obj) {
+        let count = 0;
+        for(i in obj){
+            count++;
+        }
+        return count;
+   }
+</script>
+</html>
