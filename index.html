@@ -33,7 +33,7 @@
    function noCharacters(str, characters){
        if(typeof (str) !== 'string')
            return "Input not string";
-       for (symbol of characters){
+       for (let symbol of characters){
            str.split(`${symbol}`).join('');
        }
        return str;
@@ -116,7 +116,7 @@
    // числа и операция, на выходе массив с результатом каждой операции. (Example: F([4, 3, '+'], [2, 5, '-'] ))
    function calculator2(){
         let result = [];
-        for(arr of arguments){
+        for(let arr of arguments){
             result.push(calculator(arr[0], arr[1], arr[2]))
         }
         return result;
@@ -126,7 +126,7 @@
    // использовать операцию '+'. (Example: F([4, 3, '+'], '*',  [2, 5, '-'], [4,6, '+'] )).
    function calculator3(){
        let result = [];
-       for(arr of arguments){
+       for(let arr of arguments){
            if(typeof(arr) === 'string')
                result.push(arr);
            else{
@@ -142,7 +142,7 @@
    function addPlus(arr){
        let result = [];
        let start = true;
-       for(i in arr){
+       for(let i in arr){
            if(start) {
                result.push(arr[i]);
                start = false;
@@ -270,7 +270,7 @@
 
    function pluck(arr, key) {
         let result = [];
-        for(i of arr){
+        for(let i of arr){
             result.push(i[key]);
         }
         return result;
@@ -285,7 +285,7 @@
 
    function count(obj) {
         let count = 0;
-        for(i in obj){
+        for(let i in obj){
             count++;
         }
         return count;
@@ -562,6 +562,9 @@
     //Задание 9
 
 
+   //напиши функцию, определяющую тип переменной. Результат должен быть одной из
+   // строк: 'undefined', 'boolean' (для true/false), 'null', 'number', 'string',
+   // 'function', 'array', 'array-like', 'object'
     function myTypeof(obj){
         switch(typeof (obj)){
             case "undefined":
@@ -579,7 +582,7 @@
                     return "null"
                 }
                 else if(obj instanceof Array) {
-                    return "arra";
+                    return "array";
                 }
                 else if(typeof(obj.callee) === 'function'){
                     return "array-like";
@@ -590,10 +593,37 @@
         }
     }
 
-    function c(){
-        console.log(myTypeof(arguments));
-    }
 
+
+
+    //Задание 10
+
+
+    //Напиши функцию глубокого копирования объектов и массивов.
+
+    function deepCopy(obj){
+        let copy;
+        if (null == obj || typeof(obj) !== 'object') {
+            return obj;
+        }
+        else if (obj instanceof Array) {
+            copy = [];
+            obj.forEach(function (i) {
+                copy.push(deepCopy(obj[i]))
+            });
+            return copy;
+        }
+        else if (obj instanceof Object) {
+            copy = {};
+            for (let i in obj) {
+                copy[i] = deepCopy(obj[i]);
+            }
+            return copy;
+        }
+        else{
+            return'The function copies only arrays and objects.'
+    }
+    }
 
 </script>
 </html>
