@@ -373,12 +373,12 @@
         energyGenerated(){
             this.dayEnergyGenerated = 0;
             this.nightEnergyGenerated = 0;
-            for(this.powStat of this.powerStations){
-                this.dayEnergyGenerated += this.powStat.power;
-                this.nightEnergyGenerated += this.powStat.power;
+            for(let powStat of this.powerStations){
+                this.dayEnergyGenerated += powStat.power;
+                this.nightEnergyGenerated += powStat.power;
             }
-            for(this.solPanel of this.solarPanels){
-                this.dayEnergyGenerated += this.solPanel.power;
+            for(let solPanel of this.solarPanels){
+                this.dayEnergyGenerated += solPanel.power;
             }
         }
 
@@ -386,9 +386,9 @@
         energyConsumed(){
             this.dayEnergyConsumed = 0;
             this.nightEnergyConsumed = 0;
-            for(this.house of this.houses){
-                this.dayEnergyConsumed += this.house.dayEnergyConsumption;
-                this.nightEnergyConsumed += this.house.nightEnergyConsumption;
+            for(let house of this.houses){
+                this.dayEnergyConsumed += house.dayEnergyConsumption;
+                this.nightEnergyConsumed += house.nightEnergyConsumption;
             }
         }
 
@@ -399,10 +399,10 @@
         }
 
         //Возможности электросетей
-        opportunitiesPowerLines(){
+        opportunitiesPowerLines() {
             this.opportunitiesPowerLine = 0;
-            for(this.powLine of this.powerLines){
-                this.opportunitiesPowerLine += this.powLine.power;
+            for (let powLine of this.powerLines) {
+                this.opportunitiesPowerLine += powLine.power;
             }
         }
 
