@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Contacts</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="printContact()">
+    <div class="contactBook">
+        <table id="tableContact">
+        </table>
+    </div>
+    <div class="addContact">
+        <h1>Добавить контакт</h1>
+        <input type="text" id="contactName" placeholder="Имя контакта">
+        <input type="tel" id="contactNumber" placeholder="Номер">
+        <input type="text" id="contactAddress" placeholder="Адресс">
+        <button onclick="addContact()">Добавить</button>
+    </div>
+    <div class="searchContact">
+        <h1>Поиск контакта</h1>
+        <input type="text" id="searchContactName" placeholder="Имя, номер или адрес">
+        <button onclick="searchContact()">Найти</button>
+        <table id="tableSearchContact">
+
+        </table>
+    </div>
+</body>
+<script src="js.js"></script>
+</html>

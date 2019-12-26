@@ -1,0 +1,54 @@
+body{
+    width: 1140px;
+    margin: 0 auto;
+}
+
+#tableContact{
+    border-collapse: collapse;
+}
+
+#tableSearchContact{
+    border-collapse: collapse;
+}
+
+.tableHead{
+    font-size: 20px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.contactName{
+    width: 228px;
+    border: black solid 1px;
+}
+
+.contactNumber{
+    width: 228px;
+    border: black solid 1px;
+}
+
+.contactAddress{
+    width: 584px;
+    border: black solid 1px;
+}
+
+.deleteContact{
+    width: 100px;
+    border: black solid 1px;
+    margin: 0 auto;
+}
+
+.contactSearchName{
+    width: 228px;
+    border: black solid 1px;
+}
+
+.contactSearchNumber{
+    width: 228px;
+    border: black solid 1px;
+}
+
+.contactSearchAddress{
+    width: 684px;
+    border: black solid 1px;
+}
