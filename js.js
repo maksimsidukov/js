@@ -62,6 +62,7 @@ function deleteContact(){
     saveInLocalStorage(contacts);
 
     printContactsList(contacts);
+    document.getElementById('contactInfoImg').src = '';
     document.getElementById('contactInfoName').innerText = '';
     document.getElementById('contactInfoNumber').innerText = '';
     document.getElementById('contactInfoAddress').innerText = '';

@@ -54,6 +54,7 @@ body{
     grid-column: 3/5;
     grid-row: 2/3;
     background-color: #ffffff;
+    padding: 30px 15px;
 }
 
 .addContact input{
@@ -72,11 +73,37 @@ body{
     cursor: pointer;
 }
 
+#file{
+    display: block;
+    width: 0.1px;
+    height: 0.1px;
+    font-size: 0;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    float: left;
+}
+
+#file + label{
+    font-size: 14px;
+    border: #d6d6d6 solid 2px;
+    padding: 6px 3px 7px 3px;
+    height: 30px;
+    border-radius: 3px;
+    color: #787878;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
 .contacts-list{
     grid-column: 3/4;
     grid-row: 3/13;
     background-color:#fff;
     border: #d6d6d6 solid 2px;
+    max-height: 100vh;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 .contacts-list img{
