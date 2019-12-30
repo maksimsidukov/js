@@ -1,6 +1,8 @@
+"use strict";
+
 function saveInLocalStorage(obj){
     localStorage.setItem('contactBook', JSON.stringify(obj))
-} //+
+}
 
 function downloadOfLocalStorage() {
     if(localStorage.getItem('contactBook') === null){
@@ -8,7 +10,7 @@ function downloadOfLocalStorage() {
     }
     return JSON.parse(localStorage.getItem('contactBook'))
 
-} //+
+}
 
 function addContact(){
     let contacts = downloadOfLocalStorage();
@@ -53,11 +55,11 @@ function addContact(){
 
         printContactsList(contacts);
     }
-} //+
+}
 
-function deleteContact(){
+function deleteContact(name){
     let contacts = downloadOfLocalStorage();
-    let deleteContactName = document.getElementById('contactInfoName').innerText;
+    let deleteContactName = name;
     delete contacts[deleteContactName];
     saveInLocalStorage(contacts);
 
@@ -91,20 +93,19 @@ function createContactListItem(name, imgSrc){
 
     // console.log(div);
     return div
-} //+
+}
 
 function printContactsList(obj){
     let contactsList = document.getElementsByClassName("contacts-list")[0];
-    let contacts = obj;
     contactsList.innerText = '';
 
-    for(let contact in contacts) {
+    for(let contact in obj) {
 
-        let div = createContactListItem(contact, contacts[contact].img);
+        let div = createContactListItem(contact, obj[contact].img);
         // console.log(div);
         contactsList.appendChild(div);
     }
-} //+
+}
 
 function printContactInfo(name) {
     let contactInfoName = document.getElementById('contactInfoName');
@@ -113,19 +114,24 @@ function printContactInfo(name) {
     let contactInfoImg = document.getElementById('contactInfoImg');
     let contacts = downloadOfLocalStorage();
     document.getElementById('deleteButton').style.display = 'block';
+    document.getElementById('deleteButton').onclick = function(){
+        return deleteContact(name);
+    };
 
 
-    contactInfoName.innerText = name;
-    contactInfoNumber.innerText = contacts[name].number;
-    contactInfoAddress.innerText = contacts[name].address;
+    contactInfoName.innerText = `Имя: \n ${name}`;
+    contactInfoNumber.innerText = `Номер: \n ${contacts[name].number}`;
+    contactInfoAddress.innerText = `Адрес: \n ${contacts[name].address}`;
     contactInfoImg.src = contacts[name].img;
 
-} //+
+}
 
 function searchContact() {
     let attr = document.getElementById("searchContactName").value.toLowerCase();
+    // console.log(attr);
     if(attr === ''){
         printContactsList(downloadOfLocalStorage());
+        console.log('search');
         return
     }
     let contacts = downloadOfLocalStorage();
@@ -137,7 +143,10 @@ function searchContact() {
         contact = [];
         contact.push(i);
         for(let j in contacts[i]){
-            contact.push(contacts[i][j])
+            if(j === 'img'){
+                continue
+            }
+            contact.push(contacts[i][j]);
         }
         // console.log(contact);
         contact.forEach(function(item){
@@ -150,18 +159,5 @@ function searchContact() {
     printContactsList(searchContacts);
     // console.log('search');
     return searchContacts;
-
-}
-
-function imgToBase64() {
-    let file = document.getElementById('file').files[0];
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onload = function() {
-        let base = reader.result;
-        console.log(base);
-        return base
-    };
 
 }
