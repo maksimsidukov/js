@@ -15,6 +15,13 @@ function downloadOfLocalStorage() {
 function addContact(){
     let contacts = downloadOfLocalStorage();
 
+    function cleanAddContactInputs(){
+        document.getElementById('contactName').value = null;
+        document.getElementById('contactNumber').value = null;
+        document.getElementById('contactAddress').value = null;
+        document.getElementById('file').value = null;
+    }
+
     let contactName = document.getElementById('contactName').value;
     let contactNumber = document.getElementById('contactNumber').value;
     let contactAddress = document.getElementById('contactAddress').value;
@@ -37,10 +44,7 @@ function addContact(){
 
             saveInLocalStorage(contacts);
 
-            document.getElementById('contactName').value = null;
-            document.getElementById('contactNumber').value = null;
-            document.getElementById('contactAddress').value = null;
-            document.getElementById('file').value = null;
+            cleanAddContactInputs();
 
             printContactsList(contacts);
         };
@@ -48,10 +52,7 @@ function addContact(){
         contacts[contactName] = {number: contactNumber, address: contactAddress, img: 'img/stock.png'};
         saveInLocalStorage(contacts);
 
-        document.getElementById('contactName').value = null;
-        document.getElementById('contactNumber').value = null;
-        document.getElementById('contactAddress').value = null;
-        document.getElementById('file').value = null;
+        cleanAddContactInputs();
 
         printContactsList(contacts);
     }
@@ -98,6 +99,8 @@ function createContactListItem(name, imgSrc){
 function printContactsList(obj){
     let contactsList = document.getElementsByClassName("contacts-list")[0];
     contactsList.innerText = '';
+
+    obj = sortObj(obj);
 
     for(let contact in obj) {
 
@@ -160,4 +163,20 @@ function searchContact() {
     // console.log('search');
     return searchContacts;
 
+}
+
+function sortObj(obj){
+    let result = {};
+    let names = [];
+
+    for(let i in obj){
+        names.push(i);
+    }
+
+    names.sort();
+
+    names.forEach(function(item){
+        result[item] = obj[item]
+    });
+    return result
 }
