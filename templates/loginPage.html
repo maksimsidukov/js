@@ -1,1 +1,7 @@
-<h1>Login Page</h1>
+<h1>Вход</h1>
+<div ng-controller="loginCtrl"ng-cloak>
+    <p>{{error}}</p>
+    Логин<input type="text" ng-model="login">
+    Пароль<input type="text" ng-model="password">
+    <md-button ng-click="loginFunc()" class="md-raised md-primary">Войти</md-button>
+</div>
