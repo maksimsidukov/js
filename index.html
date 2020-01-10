@@ -21,15 +21,14 @@
 <body>
 <div ng-controller="menuCtrl">
     <md-toolbar md-theme="indigo" class="app-toolbar md-indigo-theme md-whiteframe-z2 fix-top" >
-
+        <div layout="row" layout-align="center center">
+            <md-button ng-show="isAdmin()" class="md-raised" flex="15" ui-sref="adminDashboard">Доска Админа</md-button>
+            <md-button ng-show="isAdmin()" class="md-raised" flex="15" ui-sref="registration">Регистрация сотрудников</md-button>
+            <md-button ng-show="isAdmin()" class="md-raised" flex="15" ui-sref="employed">Список устроенных</md-button>
+            <md-button ng-show="isAdmin()" class="md-raised" flex="15" ui-sref="not_employed">Список не устроенных</md-button>
+            <md-button class="md-raised md-warn" ng-click="logout()" ng-show="isLogin()" flex="10">Выйти</md-button>
+        </div>
     </md-toolbar>
-    <ul ng-show="isAdmin()">
-        <li><a ui-sref="adminDashboard">Доска Админа</a></li>
-        <li><a ui-sref="registration">Регистрация сотрудников</a></li>
-        <li><a ui-sref="employed">Список устроенных</a></li>
-        <li><a ui-sref="not_employed">Список не устроенных</a></li>
-    </ul>
-    <button ng-click="logout()" ng-show="isLogin()">Выйти</button>
 </div>
 <div layout="row">
     <div flex="20"></div>
