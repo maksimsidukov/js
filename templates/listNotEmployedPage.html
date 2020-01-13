@@ -1,4 +1,4 @@
-<h1>Не устроенные работники</h1>
+<h2>Не устроенные работники</h2>
 <div ng-controller="notEmployedCtrl">
     <md-card md-theme="default" md-theme-watch ng-repeat="staff in notEmployedStaff">
         <md-card-title>
@@ -8,7 +8,13 @@
             </md-card-title-text>
         </md-card-title>
         <md-card-actions layout="row" layout-align="end center">
-            <md-button class="md-raised md-primary" ng-click="arrange(staff.name)">Устроить</md-button>
+            <md-input-container style="width: 200px">
+                <label>Отдел</label>
+                <md-select ng-model="department">
+                    <md-option ng-repeat="department in departments" ng-value="department">{{department}}</md-option>
+                </md-select>
+            </md-input-container>
+            <md-button class="md-raised md-primary" ng-click="arrange(staff.name, department)">Устроить</md-button>
             <md-button class="md-raised md-warn" ng-click="deleteStaff(staff.name)">Удалить</md-button>
         </md-card-actions>
     </md-card>

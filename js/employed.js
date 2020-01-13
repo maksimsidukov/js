@@ -3,7 +3,10 @@ app.service('employedService',function (MainService) {
         let staffMap = MainService.downloadUserOfLocalStorage();
         let employedStaff = [];
         for (let staff of staffMap.values()){
-            if(staff.isArranged === true){
+            if(staff.name === 'admin'){
+                continue
+            }
+            if(staff.department !== null){
                 employedStaff.push(staff)
             }
         }
@@ -15,7 +18,7 @@ app.service('employedService',function (MainService) {
         // console.log(staffList);
         for(let staff of staffList.values()){
             if(staff.name === name){
-                staff.isArranged = false;
+                staff.department = null;
                 break
             }
         }
@@ -24,7 +27,17 @@ app.service('employedService',function (MainService) {
 
 });
 
-app.controller('employedCtrl', function($scope, employedService){
+app.controller('employedCtrl', function($scope, employedService, notEmployedService){
+
+    $scope.departments = notEmployedService.downloadDepartmentsList();
+
+    $scope.changeDepartment = function(staffName, departmentName){
+        if(departmentName === undefined){
+            return
+        }
+        notEmployedService.arrangeService(staffName, departmentName);
+        $scope.updateEmployedStaff();
+    };
 
     $scope.updateEmployedStaff = function(){
         $scope.employedStaff = employedService.downloadEmployedStaff();

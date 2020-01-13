@@ -1,13 +1,17 @@
 <h1>Вход</h1>
 <div ng-controller="loginCtrl">
-    <p>{{error}}</p>
-    <md-input-container>
-        <label>Логин</label>
-        <input ng-model="login">
-    </md-input-container>
-    <md-input-container>
-        <label>Пароль</label>
-        <input ng-model="password">
-    </md-input-container>
-    <md-button ng-click="loginFunc()" class="md-raised md-primary">Войти</md-button>
+    <div layout="row" layout-align="center center">
+        <p>{{error}}</p>
+    </div>
+    <div layout="row" layout-align="center center">
+        <md-input-container>
+            <label>Логин</label>
+            <input ng-model="login">
+        </md-input-container>
+        <md-input-container>
+            <label>Пароль</label>
+            <input ng-model="password">
+        </md-input-container>
+        <md-button ng-click="loginFunc()" class="md-raised md-primary">Войти</md-button>
+    </div>
 </div>
