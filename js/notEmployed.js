@@ -3,19 +3,19 @@ app.service('notEmployedService',function (MainService) {
         let staffMap = MainService.downloadUserOfLocalStorage();
         let notEmployedStaff = [];
         for (let staff of staffMap.values()){
-            if(staff.isArranged === false){
+            if(staff.department === null){
                 notEmployedStaff.push(staff)
             }
         }
         return notEmployedStaff
     };
 
-    this.arrangeService = function(name){
+    this.arrangeService = function(staffName, departmentName){
         let staffList = MainService.downloadUserOfLocalStorage();
         // console.log(staffList);
         for(let staff of staffList.values()){
-            if(staff.name === name){
-                staff.isArranged = true;
+            if(staff.name === staffName){
+                staff.department = departmentName;
                 break
             }
         }
@@ -34,10 +34,22 @@ app.service('notEmployedService',function (MainService) {
                 break
             }
         }
+    };
+
+    this.downloadDepartmentsList = function(){
+        let departmentsMap = MainService.downloadDepartmentsOfLocalStorage();
+        let departmentsList = [];
+        for (let department of departmentsMap.values()){
+            departmentsList.push(department.name)
+        }
+        return departmentsList;
     }
 });
 
 app.controller('notEmployedCtrl', function($scope, notEmployedService){
+
+    $scope.departments = notEmployedService.downloadDepartmentsList();
+    // console.log($scope.departments);
 
     $scope.updateNotEmployedStaff = function(){
         $scope.notEmployedStaff = notEmployedService.downloadNotEmployedStaff();
@@ -45,9 +57,11 @@ app.controller('notEmployedCtrl', function($scope, notEmployedService){
     $scope.notEmployedStaff = notEmployedService.downloadNotEmployedStaff();
     // console.log($scope.notEmployedStaff);
 
-    $scope.arrange = function(name){
-        // console.log(name);
-        notEmployedService.arrangeService(name);
+    $scope.arrange = function(staffName, departmentName){
+        if(departmentName === undefined){
+            return
+        }
+        notEmployedService.arrangeService(staffName, departmentName);
         $scope.updateNotEmployedStaff();
     };
 

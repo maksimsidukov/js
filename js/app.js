@@ -1,6 +1,6 @@
 var app = angular.module('staffList', ['ui.router', 'ngMaterial', 'ngMessages']);
 
-app.controller('menuCtrl', function($scope, $rootScope, MainService){
+app.controller('menuCtrl', function($scope, $rootScope, MainService, $mdSidenav){
     $scope.logout = function(){
         MainService.logout()
     };
@@ -21,7 +21,15 @@ app.controller('menuCtrl', function($scope, $rootScope, MainService){
                 return false
             }
         }
-    }
+    };
+
+    // $scope.toggleRight = function() {
+    //     $mdSidenav('left').toggle();
+    // };
+    //
+    // $scope.close = function() {
+    //     $mdSidenav('left').close();
+    // };
 });
 
 app.service('MainService', function($state){
@@ -39,12 +47,26 @@ app.service('MainService', function($state){
         return map;
     };
 
+    this.saveDepartmentsInLocalStorage = function(map){
+        localStorage.setItem('DepartmentsList', JSON.stringify([...map]))
+    };
+
+    this.downloadDepartmentsOfLocalStorage = function(){
+        let map;
+        if(localStorage.getItem('DepartmentsList') === null){
+            map = new Map();
+        } else {
+            map = new Map(JSON.parse(localStorage.getItem('DepartmentsList')));
+        }
+        return map;
+    };
+
     this.logout = function () {
         // console.log('logout');
         localStorage.setItem('loginUser', null);
         $state.go('login')
 
-    }
+    };
 });
 
 function checkLoginAndAccess(){
@@ -102,6 +124,11 @@ app.config(function($stateProvider, $urlRouterProvider){
         .state('not_employed', {
             url: '/not_employed',
             templateUrl : 'templates/listNotEmployedPage.html',
+            controller: checkLoginAndAccess(),
+        })
+        .state('departments', {
+            url: '/departments',
+            templateUrl : 'templates/departmentPage.html',
             controller: checkLoginAndAccess(),
         })
 });

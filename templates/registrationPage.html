@@ -1,4 +1,5 @@
-<div ng-controller="registrationCtrl">
+<h2>Зарегестрировать сотрудника</h2>
+<div ng-controller="registrationCtrl" layout="row" layout-align="center center">
     <md-input-container>
         <label>Имя</label>
         <input ng-model="name">
@@ -11,5 +12,7 @@
         <label>Пароль</label>
         <input ng-model="password">
     </md-input-container>
-    <md-button class="md-raised md-primary" ng-click="registration()">Зарегестрировать</md-button>
+    <md-input-container>
+        <md-button class="md-raised md-primary" ng-click="registration()">Зарегестрировать</md-button>
+    </md-input-container>
 </div>

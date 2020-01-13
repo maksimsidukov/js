@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" ng-app="staffList">
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.20/angular-material.min.css">
+<link rel="stylesheet" href="style/style.css">
 <head>
     <meta charset="UTF-8">
     <title>Staff list</title>
@@ -17,26 +18,50 @@
     <script src="js/employed.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/adminDashboard.js"></script>
+    <script src="js/department.js"></script>
 </head>
 <body>
-<div ng-controller="menuCtrl">
-    <md-toolbar md-theme="indigo" class="app-toolbar md-indigo-theme md-whiteframe-z2 fix-top" >
-        <div layout="row" layout-align="center center">
-            <md-button ng-show="isAdmin()" class="md-raised" flex="15" ui-sref="adminDashboard">Доска Админа</md-button>
-            <md-button ng-show="isAdmin()" class="md-raised" flex="15" ui-sref="registration">Регистрация сотрудников</md-button>
-            <md-button ng-show="isAdmin()" class="md-raised" flex="15" ui-sref="employed">Список устроенных</md-button>
-            <md-button ng-show="isAdmin()" class="md-raised" flex="15" ui-sref="not_employed">Список не устроенных</md-button>
-            <md-button class="md-raised md-warn" ng-click="logout()" ng-show="isLogin()" flex="10">Выйти</md-button>
-        </div>
-    </md-toolbar>
-</div>
-<div layout="row">
-    <div flex="20"></div>
-    <div flex="60" layout="row" layout-align="center center">
-        <div ui-view></div>
+    <div ng-controller="menuCtrl">
+        <md-toolbar md-theme="indigo" class="app-toolbar md-indigo-theme md-whiteframe-z2 fix-top" >
+            <div class="md-toolbar-tools" tabindex="0" layout="row" layout-align="end center">
+                <md-button class="md-raised md-warn" ng-click="logout()" ng-show="isLogin()">Выйти</md-button>
+            </div>
+        </md-toolbar>
+        <md-nav-bar layout="row"  layout-align="center center" ng-show="isAdmin()">
+            <md-nav-item md-nav-sref="adminDashboard">Доска управляющего</md-nav-item>
+            <md-nav-item md-nav-sref="departments">Отделы</md-nav-item>
+            <md-nav-item md-nav-sref="registration">Регистрация сотрудника</md-nav-item>
+            <md-nav-item md-nav-sref="employed">Устроенные сотрудники</md-nav-item>
+            <md-nav-item md-nav-sref="not_employed">Не устроенные сотрудники</md-nav-item>
+        </md-nav-bar>
+<!--        <md-toolbar md-theme="indigo" class="app-toolbar md-indigo-theme md-whiteframe-z2 fix-top" >-->
+<!--            <div class="md-toolbar-tools" tabindex="0">-->
+<!--                <md-button class="menu-icon nornal-btn" ng-click="toggleRight()" layout="row" layout-align="center center" ng-show="isLogin()">-->
+<!--                    <img src="img/menu.svg" alt="">-->
+<!--                </md-button>-->
+<!--            </div>-->
+<!--        </md-toolbar>-->
+<!--        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">-->
+<!--            <div ng-click="close()">-->
+<!--                <md-toolbar md-theme="indigo">-->
+<!--                    <h1 class="md-toolbar-tools">Меню</h1>-->
+<!--                </md-toolbar>-->
+<!--                <md-content layout="column">-->
+<!--                    <md-button ng-show="isAdmin()" class="md-raised" ui-sref="adminDashboard">Доска Админа</md-button>-->
+<!--                    <md-button ng-show="isAdmin()" class="md-raised" ui-sref="registration">Регистрация сотрудников</md-button>-->
+<!--                    <md-button ng-show="isAdmin()" class="md-raised" ui-sref="employed">Список устроенных</md-button>-->
+<!--                    <md-button ng-show="isAdmin()" class="md-raised" ui-sref="not_employed">Список не устроенных</md-button>-->
+<!--                    <md-button class="md-raised md-warn" ng-click="logout()" ng-show="isLogin()">Выйти</md-button>-->
+<!--                </md-content>-->
+<!--            </div>-->
+<!--        </md-sidenav>-->
     </div>
-    <div flex="20"></div>
-</div>
-
+    <div layout="row">
+        <div flex="20"></div>
+        <div flex="60" layout="row">
+            <div ui-view  style="min-width: 100%"></div>
+        </div>
+        <div flex="20"></div>
+    </div>
 </body>
 </html>

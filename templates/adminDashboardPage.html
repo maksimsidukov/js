@@ -1,13 +1,20 @@
-<h1>Доска админа</h1>
+<h2>Доска управляющего</h2>
 <div ng-controller="adminDashboardCtrl">
     <md-card md-theme="default" md-theme-watch ng-repeat="staff in employedStaff">
         <md-card-title>
             <md-card-title-text>
                 <span class="md-headline">{{staff.name}}</span>
-                <span class="md-subhead">Устроен</span>
+                <span class="md-subhead">Отдел: {{staff.department}}</span>
             </md-card-title-text>
         </md-card-title>
         <md-card-actions layout="row" layout-align="end center">
+            <md-input-container style="width: 200px">
+                <label>Отдел</label>
+                <md-select ng-model="department">
+                    <md-option ng-repeat="department in departments" ng-value="department">{{department}}</md-option>
+                </md-select>
+            </md-input-container>
+            <md-button class="md-raised md-primary" ng-click="changeDepartment(staff.name, department)">Сменить отдел</md-button>
             <md-button class="md-raised md-warn" ng-click="notArrange(staff.name)">Уволить</md-button>
         </md-card-actions>
     </md-card>
