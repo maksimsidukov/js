@@ -1,10 +1,15 @@
 <h1>Не устроенные работники</h1>
 <div ng-controller="notEmployedCtrl">
-    <table ng-repeat="staff in notEmployedStaff">
-        <tr>
-            <td>{{staff.name}}</td>
-            <td><button ng-click="arrange(staff.name)">Устроить</button></td>
-            <td><button ng-click="deleteStaff(staff.name)">Удалить</button></td>
-        </tr>
-    </table>
+    <md-card md-theme="default" md-theme-watch ng-repeat="staff in notEmployedStaff">
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">{{staff.name}}</span>
+                <span class="md-subhead">Не устроен</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button class="md-raised md-primary" ng-click="arrange(staff.name)">Устроить</md-button>
+            <md-button class="md-raised md-warn" ng-click="deleteStaff(staff.name)">Удалить</md-button>
+        </md-card-actions>
+    </md-card>
 </div>

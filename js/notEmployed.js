@@ -28,7 +28,7 @@ app.service('notEmployedService',function (MainService) {
         for(let staff of staffList.values()){
             if(staff.name === name){
                 // console.log(staffList);
-                staffList.delete(name);
+                staffList.delete(staff.login);
                 // console.log(staffList);
                 MainService.saveUserInLocalStorage(staffList);
                 break
