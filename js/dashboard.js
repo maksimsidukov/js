@@ -1,8 +1,11 @@
 app.controller('dashboardCtrl', function($scope){
-    $scope.name = JSON.parse(localStorage.getItem('loginUser')).name;
-    if(JSON.parse(localStorage.getItem('loginUser')).isArranged){
-        $scope.arranged = 'Устроен'
-    } else {
-        $scope.arranged = 'не устроен'
-    }
+    $scope.user = JSON.parse(localStorage.getItem('loginUser'));
+
+    $scope.hide = function (){
+        if(JSON.parse(localStorage.getItem('loginUser')).department === null){
+            return false
+        } else {
+            return true
+        }
+    };
 });

@@ -15,11 +15,26 @@ app.service('DepartmentService', function(MainService){
         return departmentsArray
     };
 
+    this.discoverSalary = function(departmentName){
+        let departments =  MainService.downloadDepartmentsOfLocalStorage();
+        let department = departments.get(departmentName);
+        return department.salary
+    };
+
     this.deleteDepartment = function(name){
         let departmentsList = MainService.downloadDepartmentsOfLocalStorage();
         departmentsList.delete(name);
         MainService.saveDepartmentsInLocalStorage(departmentsList);
     };
+
+    this.isAccountant = function(departmentName){
+        let departmentList = this.downloadDepartments();
+        departmentList.forEach(function (item) {
+            if(item.name === departmentName && item.type === 'Финансы'){
+                    return true;
+            }
+        })
+    }
 });
 
 
@@ -46,7 +61,7 @@ app.controller('departmentCtrl', function($scope, DepartmentService){
         $scope.updateDepartmentList();
     };
 
-    $scope.departmentsTypes = ["Кухня", "Бухгалтерия", "Управление", "Уборка"];
+    $scope.departmentsTypes = ["Кухня", "Финансы", "Управление", "Уборка"];
 
     $scope.departments = DepartmentService.downloadDepartments();
 

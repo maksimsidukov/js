@@ -22,39 +22,19 @@
 </head>
 <body>
     <div ng-controller="menuCtrl">
-        <md-toolbar md-theme="indigo" class="app-toolbar md-indigo-theme md-whiteframe-z2 fix-top" >
+        <md-toolbar class="app-toolbar md-indigo-theme md-whiteframe-z2 fix-top" >
             <div class="md-toolbar-tools" tabindex="0" layout="row" layout-align="end center">
                 <md-button class="md-raised md-warn" ng-click="logout()" ng-show="isLogin()">Выйти</md-button>
             </div>
         </md-toolbar>
-        <md-nav-bar layout="row"  layout-align="center center" ng-show="isAdmin()">
-            <md-nav-item md-nav-sref="adminDashboard">Доска управляющего</md-nav-item>
-            <md-nav-item md-nav-sref="departments">Отделы</md-nav-item>
-            <md-nav-item md-nav-sref="registration">Регистрация сотрудника</md-nav-item>
-            <md-nav-item md-nav-sref="employed">Устроенные сотрудники</md-nav-item>
-            <md-nav-item md-nav-sref="not_employed">Не устроенные сотрудники</md-nav-item>
+        <md-nav-bar layout="row"  layout-align="center center" ng-show="isLogin()">
+            <md-nav-item md-nav-sref="dashboard" ng-hide="isAdmin()">Инфо пользователя</md-nav-item>
+            <md-nav-item md-nav-sref="adminDashboard" ng-show="isAdmin()">Доска управляющего</md-nav-item>
+            <md-nav-item md-nav-sref="departments" ng-show="isAdmin()">Отделы</md-nav-item>
+            <md-nav-item md-nav-sref="registration" ng-show="isAdmin()">Регистрация сотрудника</md-nav-item>
+            <md-nav-item md-nav-sref="employed" ng-show="isAccountant()">Устроенные сотрудники</md-nav-item>
+            <md-nav-item md-nav-sref="not_employed" ng-show="isAdmin()">Не устроенные сотрудники</md-nav-item>
         </md-nav-bar>
-<!--        <md-toolbar md-theme="indigo" class="app-toolbar md-indigo-theme md-whiteframe-z2 fix-top" >-->
-<!--            <div class="md-toolbar-tools" tabindex="0">-->
-<!--                <md-button class="menu-icon nornal-btn" ng-click="toggleRight()" layout="row" layout-align="center center" ng-show="isLogin()">-->
-<!--                    <img src="img/menu.svg" alt="">-->
-<!--                </md-button>-->
-<!--            </div>-->
-<!--        </md-toolbar>-->
-<!--        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">-->
-<!--            <div ng-click="close()">-->
-<!--                <md-toolbar md-theme="indigo">-->
-<!--                    <h1 class="md-toolbar-tools">Меню</h1>-->
-<!--                </md-toolbar>-->
-<!--                <md-content layout="column">-->
-<!--                    <md-button ng-show="isAdmin()" class="md-raised" ui-sref="adminDashboard">Доска Админа</md-button>-->
-<!--                    <md-button ng-show="isAdmin()" class="md-raised" ui-sref="registration">Регистрация сотрудников</md-button>-->
-<!--                    <md-button ng-show="isAdmin()" class="md-raised" ui-sref="employed">Список устроенных</md-button>-->
-<!--                    <md-button ng-show="isAdmin()" class="md-raised" ui-sref="not_employed">Список не устроенных</md-button>-->
-<!--                    <md-button class="md-raised md-warn" ng-click="logout()" ng-show="isLogin()">Выйти</md-button>-->
-<!--                </md-content>-->
-<!--            </div>-->
-<!--        </md-sidenav>-->
     </div>
     <div layout="row">
         <div flex="20"></div>

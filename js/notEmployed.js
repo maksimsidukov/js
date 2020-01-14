@@ -1,4 +1,4 @@
-app.service('notEmployedService',function (MainService) {
+app.service('notEmployedService',function (MainService, DepartmentService) {
     this.downloadNotEmployedStaff = function(){
         let staffMap = MainService.downloadUserOfLocalStorage();
         let notEmployedStaff = [];
@@ -15,7 +15,7 @@ app.service('notEmployedService',function (MainService) {
         // console.log(staffList);
         for(let staff of staffList.values()){
             if(staff.name === staffName){
-                staff.department = departmentName;
+                staff.department = {name:departmentName, salary: DepartmentService.discoverSalary(departmentName)};
                 break
             }
         }

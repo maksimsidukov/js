@@ -1,13 +1,14 @@
 <h2>Устроенные работники</h2>
 <div ng-controller="employedCtrl">
-    <md-card md-theme="default" md-theme-watch ng-repeat="staff in employedStaff">
+    <md-card ng-repeat="staff in employedStaff">
         <md-card-title>
             <md-card-title-text>
                 <span class="md-headline">{{staff.name}}</span>
-                <span class="md-subhead">Отдел: {{staff.department}}</span>
+                <span class="md-subhead">Отдел: {{staff.department.name}}</span>
+                <span class="md-subhead">Оклад: {{staff.department.salary}}</span>
             </md-card-title-text>
         </md-card-title>
-        <md-card-actions layout="row" layout-align="end center">
+        <md-card-actions layout="row" layout-align="end center" ng-show="isAdmin()">
             <md-input-container style="width: 200px">
                 <label>Отдел</label>
                 <md-select ng-model="department">

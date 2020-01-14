@@ -1,37 +1,5 @@
 var app = angular.module('staffList', ['ui.router', 'ngMaterial', 'ngMessages']);
 
-app.controller('menuCtrl', function($scope, $rootScope, MainService, $mdSidenav){
-    $scope.logout = function(){
-        MainService.logout()
-    };
-
-    $scope.isLogin = function() {
-        if (JSON.parse(localStorage.getItem('loginUser')) !== null) {
-            return  true
-        } else {
-            return  false
-        }
-    };
-
-    $scope.isAdmin = function(){
-        if($scope.isLogin()){
-            if(JSON.parse(localStorage.getItem('loginUser')).isAdmin){
-                return true
-            } else {
-                return false
-            }
-        }
-    };
-
-    // $scope.toggleRight = function() {
-    //     $mdSidenav('left').toggle();
-    // };
-    //
-    // $scope.close = function() {
-    //     $mdSidenav('left').close();
-    // };
-});
-
 app.service('MainService', function($state){
     this.saveUserInLocalStorage = function(map){
         localStorage.setItem('StaffList', JSON.stringify([...map]))
@@ -68,6 +36,35 @@ app.service('MainService', function($state){
 
     };
 });
+
+app.controller('menuCtrl', function($scope, $rootScope, MainService){
+    $scope.logout = function(){
+        MainService.logout()
+    };
+
+    $scope.isLogin = function() {
+        if (JSON.parse(localStorage.getItem('loginUser')) !== null) {
+            return true
+        }
+    };
+
+    $scope.isAdmin = function(){
+        if($scope.isLogin()){
+            if(JSON.parse(localStorage.getItem('loginUser')).isAdmin){
+                return true
+            }
+        }
+    };
+
+    $scope.isAccountant = function(){
+        if(JSON.parse(localStorage.getItem('loginUser')) === null || JSON.parse(localStorage.getItem('loginUser')).department === null){
+            return false
+        } else if($scope.isAdmin() || JSON.parse(localStorage.getItem('loginUser')).department.name === 'Бухгалтерия'){
+            return true
+        }
+    }
+});
+
 
 function checkLoginAndAccess(){
     return function($state){
@@ -119,7 +116,7 @@ app.config(function($stateProvider, $urlRouterProvider){
         .state('employed', {
             url: '/employed',
             templateUrl : 'templates/listEmployedPage.html',
-            controller: checkLoginAndAccess(),
+            // controller: checkLoginAndAccess(),
         })
         .state('not_employed', {
             url: '/not_employed',

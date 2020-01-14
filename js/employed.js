@@ -49,5 +49,13 @@ app.controller('employedCtrl', function($scope, employedService, notEmployedServ
         // console.log(name);
         employedService.notArrangeService(name);
         $scope.updateEmployedStaff();
-    }
+    };
+
+    $scope.isAdmin = function(){
+            if(JSON.parse(localStorage.getItem('loginUser')).isAdmin){
+                return true
+            } else {
+                return false
+            }
+    };
 });
