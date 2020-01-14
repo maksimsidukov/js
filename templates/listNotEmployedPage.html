@@ -1,21 +1,2 @@
 <h2>Не устроенные работники</h2>
-<div ng-controller="notEmployedCtrl">
-    <md-card md-theme="default" md-theme-watch ng-repeat="staff in notEmployedStaff">
-        <md-card-title>
-            <md-card-title-text>
-                <span class="md-headline">{{staff.name}}</span>
-                <span class="md-subhead">Не устроен</span>
-            </md-card-title-text>
-        </md-card-title>
-        <md-card-actions layout="row" layout-align="end center">
-            <md-input-container style="width: 200px">
-                <label>Отдел</label>
-                <md-select ng-model="department">
-                    <md-option ng-repeat="department in departments" ng-value="department">{{department}}</md-option>
-                </md-select>
-            </md-input-container>
-            <md-button class="md-raised md-primary" ng-click="arrange(staff.name, department)">Устроить</md-button>
-            <md-button class="md-raised md-warn" ng-click="deleteStaff(staff.name)">Удалить</md-button>
-        </md-card-actions>
-    </md-card>
-</div>
+<not-employed-staff></not-employed-staff>
