@@ -6,7 +6,7 @@ app.component('instanceEmployee',{
         onUpdate:'&',
         isArrange:'='
     },
-    controller: function(StaffService){
+    controller: function(StaffService, MainService){
 
 
         this.changeDepartment = function(staffName, departmentName){
@@ -25,6 +25,10 @@ app.component('instanceEmployee',{
             StaffService.deleteEmployee(name);
             this.onUpdate();
         };
+
+        this.isAdmin = function(){
+            return MainService.isAdmin();
+        }
 
     }
 });

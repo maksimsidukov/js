@@ -7,7 +7,6 @@ app.component('employedStaff', {
         this.departmentsList = StaffService.downloadDepartmentsList();
 
         this.updateEmployedStaffList = function(){
-            console.log('update');
             this.employedStaffList = StaffService.downloadEmployedStaff();
         }
 

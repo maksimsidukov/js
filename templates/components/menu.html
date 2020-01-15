@@ -1,0 +1,13 @@
+<md-toolbar class="app-toolbar md-indigo-theme md-whiteframe-z2 fix-top" >
+    <div class="md-toolbar-tools" tabindex="0" layout="row" layout-align="end center">
+        <md-button class="md-raised md-warn" ng-click="$ctrl.logout()" ng-show="$ctrl.isLogin()">Выйти</md-button>
+    </div>
+</md-toolbar>
+<md-nav-bar layout="row"  layout-align="center center" ng-show="$ctrl.isLogin()">
+    <md-nav-item md-nav-sref="dashboard" ng-hide="$ctrl.isAdmin()">Инфо пользователя</md-nav-item>
+    <md-nav-item md-nav-sref="adminDashboard" ng-show="$ctrl.isAdmin()">Доска управляющего</md-nav-item>
+    <md-nav-item md-nav-sref="departments" ng-show="$ctrl.isAdmin()">Отделы</md-nav-item>
+    <md-nav-item md-nav-sref="registration" ng-show="$ctrl.isAdmin()">Регистрация сотрудника</md-nav-item>
+    <md-nav-item md-nav-sref="employed" ng-show="$ctrl.isAccountant()">Устроенные сотрудники</md-nav-item>
+    <md-nav-item md-nav-sref="not_employed" ng-show="$ctrl.isAdmin()">Не устроенные сотрудники</md-nav-item>
+</md-nav-bar>

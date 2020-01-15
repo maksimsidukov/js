@@ -27,7 +27,6 @@ app.service('StaffService',function (MainService, DepartmentService) {
 
     this.arrangeEmployee = function(staffName, departmentName){
         let staffList = MainService.downloadUserOfLocalStorage();
-        // console.log(staffList);
         for(let staff of staffList.values()){
             if(staff.name === staffName){
                 staff.department = {name:departmentName, salary: DepartmentService.discoverSalary(departmentName)};
@@ -57,6 +56,12 @@ app.service('StaffService',function (MainService, DepartmentService) {
                 break
             }
         }
+    };
+
+    this.addEmployee = function(name, obj){
+        let staffMap = MainService.downloadUserOfLocalStorage();
+        staffMap.set(name, obj);
+        MainService.saveUserInLocalStorage(staffMap);
     };
 
     this.downloadDepartmentsList = function(){

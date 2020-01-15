@@ -1,0 +1,21 @@
+<md-card>
+    <md-card-title layout="row" layout-align="center center">
+        <md-input-container>
+            <label>Имя</label>
+            <input ng-model="$ctrl.nameEmployee">
+        </md-input-container>
+        <md-input-container>
+            <label>Логин</label>
+            <input ng-model="$ctrl.loginEmployee">
+        </md-input-container>
+        <md-input-container>
+            <label>Пароль</label>
+            <input ng-model="$ctrl.passwordEmployee">
+        </md-input-container>
+    </md-card-title>
+    <div layout="row" layout-align="end center">
+        <md-input-container>
+            <md-button class="md-raised md-primary" ng-click="$ctrl.registrationEmployee()">Зарегестрировать</md-button>
+        </md-input-container>
+    </div>
+</md-card>

@@ -1,0 +1,23 @@
+<md-card>
+    <md-card-title layout="row" layout-align="center none">
+        <md-input-container>
+            <label>Название отдела</label>
+            <input ng-model="$ctrl.departmentName">
+        </md-input-container>
+        <md-input-container>
+            <label>Оклад в отделе</label>
+            <input ng-model="$ctrl.departmentSalary">
+        </md-input-container>
+        <md-input-container style="width: 150px">
+            <label>Тип отдела</label>
+            <md-select ng-model="$ctrl.departmentType" >
+                <md-option ng-repeat="type in $ctrl.departmentsTypes" ng-value=type>{{type}}</md-option>
+            </md-select>
+        </md-input-container>
+    </md-card-title>
+    <md-card-actions layout="row" layout-align="end center">
+        <md-input-container>
+            <md-button class="md-raised md-primary" ng-click="$ctrl.addDepartment()">Создать</md-button>
+        </md-input-container>
+    </md-card-actions>
+</md-card>

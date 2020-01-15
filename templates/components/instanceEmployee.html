@@ -2,11 +2,12 @@
     <md-card-title>
         <md-card-title-text>
             <span class="md-headline">{{$ctrl.staff.name}}</span>
+            <span class="md-subhead" ng-hide="$ctrl.isArrange">Не устроен</span>
             <span class="md-subhead" ng-show="$ctrl.isArrange">Отдел: {{$ctrl.staff.department.name}}</span>
             <span class="md-subhead" ng-show="$ctrl.isArrange">Оклад: {{$ctrl.staff.department.salary}}</span>
         </md-card-title-text>
     </md-card-title>
-    <md-card-actions layout="row" layout-align="end center">
+    <md-card-actions layout="row" layout-align="end center" ng-show="$ctrl.isAdmin()">
         <md-input-container style="width: 200px">
             <label>Отдел</label>
             <md-select ng-model="department">
