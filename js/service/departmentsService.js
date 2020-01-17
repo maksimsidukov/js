@@ -1,35 +1,28 @@
-app.service('DepartmentService', function(MainService){
+app.service('DepartmentService', function($http){
 
-    this.addDepartment = function(name, obj){
-        let departmentsList = MainService.downloadDepartmentsOfLocalStorage();
-        departmentsList.set(name, obj);
-        MainService.saveDepartmentsInLocalStorage(departmentsList);
+    this.departmentNameBusyError = [false];
+
+    $http.get('http://localhost:3001/departments')
+        .then((result) => {
+            this.departmentsList = result.data;
+        });
+
+    this.addDepartment = function(department){
+        $http.post('http://localhost:3001/add_department', department)
+            .then(() => {
+                this.departmentsList.push(department);
+                this.departmentNameBusyError[0] = false;
+            })
+            .catch((result) => {
+                this.departmentNameBusyError[0] = true;
+            })
     };
 
-    this.downloadDepartments = function(){
-        let departments =  MainService.downloadDepartmentsOfLocalStorage();
-        let departmentsArray = [];
-        for (let department of departments.values()){
-            departmentsArray.push(department)
-        }
-        return departmentsArray
+    this.deleteDepartment = function(department){
+        console.log(department);
+        $http.post('http://localhost:3001/delete_department', department)
+            .then(() => {
+                _.pull(this.departmentsList, department)
+            });
     };
-
-    this.discoverSalary = function(departmentName){
-        let departments =  MainService.downloadDepartmentsOfLocalStorage();
-        return departments.get(departmentName).salary
-    };
-
-    this.deleteDepartment = function(name){
-        let departmentsList = MainService.downloadDepartmentsOfLocalStorage();
-        departmentsList.delete(name);
-        MainService.saveDepartmentsInLocalStorage(departmentsList);
-    };
-
-    this.isAccountant = function(departmentName){
-        let departments = MainService.downloadDepartmentsOfLocalStorage();
-        if(departments.get(departmentName).type === 'Финансы') {
-            return true
-        }
-    }
 });

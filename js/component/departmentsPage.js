@@ -1,16 +1,8 @@
 app.component('departmentsPage', {
     templateUrl:'templates/components/departmentsPage.html',
-    controller: function(DepartmentService){
+    controller: function($http, DepartmentService){
 
-        this.departmentsList = DepartmentService.downloadDepartments();
-
-        this.updateDepartmentsList = function(){
-            this.departmentsList = DepartmentService.downloadDepartments();
-        };
-
-        this.deleteDepartment = function(name){
-            DepartmentService.deleteDepartment(name);
-        };
+        this.departmentsList = DepartmentService.departmentsList;
 
         this.departmentsTypes = ["Кухня", "Финансы", "Управление", "Уборка"];
     }

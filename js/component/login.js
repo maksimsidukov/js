@@ -1,9 +1,15 @@
 app.component('login', {
     templateUrl:'templates/components/login.html',
-    controller: function(MainService){
+    controller: function(LoginService){
+
+        this.loginError = false;
 
         this.login = function(){
-            MainService.login(this.userLogin, this.userPassword)
-        }
+            if(!LoginService.login(this.userLogin, this.userPassword)){
+                this.loginError = true;
+                this.userLogin = null;
+                this.userPassword = null;
+            }
+        };
     }
 });

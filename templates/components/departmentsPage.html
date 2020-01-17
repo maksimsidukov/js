@@ -1,4 +1,4 @@
 <h2>Добавить отдел</h2>
-<add-department departments-types="$ctrl.departmentsTypes" on-update="$ctrl.updateDepartmentsList()"></add-department>
+<add-department departments-types="$ctrl.departmentsTypes"></add-department>
 <h2>Список департаментов</h2>
-<instance-department ng-repeat="department in $ctrl.departmentsList" department="department" on-update="$ctrl.updateDepartmentsList()"></instance-department>
+<instance-department ng-repeat="department in $ctrl.departmentsList" department="department" ></instance-department>

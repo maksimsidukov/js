@@ -2,15 +2,19 @@
     <md-card-title layout="row" layout-align="center center">
         <md-input-container>
             <label>Имя</label>
-            <input ng-model="$ctrl.nameEmployee">
+            <input required ng-model="$ctrl.nameEmployee">
+            <div ng-messages="error" >
+                <span class="errorMessage" ng-show="$ctrl.registerError">Заполните все поля!</span>
+                <span class="errorMessage" ng-show="$ctrl.loginBusyError[0]">Логин занят!</span>
+            </div>
         </md-input-container>
         <md-input-container>
             <label>Логин</label>
-            <input ng-model="$ctrl.loginEmployee">
+            <input required ng-model="$ctrl.loginEmployee">
         </md-input-container>
         <md-input-container>
             <label>Пароль</label>
-            <input ng-model="$ctrl.passwordEmployee">
+            <input required ng-model="$ctrl.passwordEmployee">
         </md-input-container>
     </md-card-title>
     <div layout="row" layout-align="end center">

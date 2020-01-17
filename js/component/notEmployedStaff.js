@@ -1,15 +1,10 @@
 app.component('notEmployedStaff', {
     templateUrl:'templates/components/notEmployedStaff.html',
-    controller: function(StaffService){
+    controller: function(StaffService, DepartmentService){
 
-        this.notEmployedStaffList = StaffService.downloadNotEmployedStaff();
+        this.notEmployedStaffList = StaffService.notArrangeStaff;
 
-        this.departmentsList = StaffService.downloadDepartmentsList();
-
-        this.updateNotEmployedStaffList = function(){
-            console.log('update');
-            this.notEmployedStaffList = StaffService.downloadNotEmployedStaff();
-        }
+        this.departmentsList = DepartmentService.departmentsList;
 
     }
 });

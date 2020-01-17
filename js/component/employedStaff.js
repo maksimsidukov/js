@@ -1,14 +1,10 @@
 app.component('employedStaff', {
     templateUrl:'templates/components/employedStaff.html',
-    controller: function(StaffService){
+    controller: function(StaffService, DepartmentService){
 
-        this.employedStaffList = StaffService.downloadEmployedStaff();
+        this.employedStaffList = StaffService.arrangeStaff;
 
-        this.departmentsList = StaffService.downloadDepartmentsList();
-
-        this.updateEmployedStaffList = function(){
-            this.employedStaffList = StaffService.downloadEmployedStaff();
-        }
+        this.departmentsList = DepartmentService.departmentsList;
 
     }
 });

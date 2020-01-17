@@ -1,22 +1,22 @@
 <md-card>
     <md-card-title>
         <md-card-title-text>
-            <span class="md-headline">{{$ctrl.staff.name}}</span>
+            <span class="md-headline">{{$ctrl.employee.name}}</span>
             <span class="md-subhead" ng-hide="$ctrl.isArrange">Не устроен</span>
-            <span class="md-subhead" ng-show="$ctrl.isArrange">Отдел: {{$ctrl.staff.department.name}}</span>
-            <span class="md-subhead" ng-show="$ctrl.isArrange">Оклад: {{$ctrl.staff.department.salary}}</span>
+            <span class="md-subhead" ng-show="$ctrl.isArrange">Отдел: {{$ctrl.employee.department.name}}</span>
+            <span class="md-subhead" ng-show="$ctrl.isArrange">Оклад: {{$ctrl.employee.department.salary}}</span>
         </md-card-title-text>
     </md-card-title>
     <md-card-actions layout="row" layout-align="end center" ng-show="$ctrl.isAdmin()">
         <md-input-container style="width: 200px">
             <label>Отдел</label>
             <md-select ng-model="department">
-                <md-option ng-repeat="department in $ctrl.departments" ng-value="department">{{department}}</md-option>
+                <md-option ng-repeat="department in $ctrl.departments" ng-value="department">{{department.name}}</md-option>
             </md-select>
         </md-input-container>
-        <md-button class="md-raised md-primary" ng-show="$ctrl.isArrange" ng-click="$ctrl.changeDepartment($ctrl.staff.name, department)">Сменить отдел</md-button>
-        <md-button class="md-raised md-warn" ng-show="$ctrl.isArrange" ng-click="$ctrl.dismissEmployee($ctrl.staff.name)">Уволить</md-button>
-        <md-button class="md-raised md-primary" ng-hide="$ctrl.isArrange" ng-click="$ctrl.changeDepartment($ctrl.staff.name, department)">Устроить</md-button>
-        <md-button class="md-raised md-warn" ng-hide="$ctrl.isArrange" ng-click="$ctrl.deleteEmployee($ctrl.staff.name)">Удалить</md-button>
+        <md-button class="md-raised md-primary" ng-show="$ctrl.isArrange" ng-click="$ctrl.changeDepartment($ctrl.employee, department)">Сменить отдел</md-button>
+        <md-button class="md-raised md-warn" ng-show="$ctrl.isArrange" ng-click="$ctrl.dismissEmployee($ctrl.employee)">Уволить</md-button>
+        <md-button class="md-raised md-primary" ng-hide="$ctrl.isArrange" ng-click="$ctrl.changeDepartment($ctrl.employee, department)">Устроить</md-button>
+        <md-button class="md-raised md-warn" ng-hide="$ctrl.isArrange" ng-click="$ctrl.deleteEmployee($ctrl.employee)">Удалить</md-button>
     </md-card-actions>
 </md-card>

@@ -2,15 +2,19 @@
     <md-card-title layout="row" layout-align="center none">
         <md-input-container>
             <label>Название отдела</label>
-            <input ng-model="$ctrl.departmentName">
+            <input required ng-model="$ctrl.departmentName">
+            <div ng-messages="error" >
+                <span class="errorMessage" ng-show="$ctrl.inputError">Заполните все поля!</span>
+                <span class="errorMessage" ng-show="$ctrl.departmentNameBusyError[0]">Название департамента занято!</span>
+            </div>
         </md-input-container>
         <md-input-container>
             <label>Оклад в отделе</label>
-            <input ng-model="$ctrl.departmentSalary">
+            <input required type="number" ng-model="$ctrl.departmentSalary">
         </md-input-container>
         <md-input-container style="width: 150px">
             <label>Тип отдела</label>
-            <md-select ng-model="$ctrl.departmentType" >
+            <md-select required ng-model="$ctrl.departmentType" >
                 <md-option ng-repeat="type in $ctrl.departmentsTypes" ng-value=type>{{type}}</md-option>
             </md-select>
         </md-input-container>

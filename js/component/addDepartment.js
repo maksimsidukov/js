@@ -1,16 +1,24 @@
 app.component('addDepartment',{
     templateUrl:'templates/components/addDepartment.html',
     bindings:{
-        onUpdate:'&',
         departmentsTypes:'=',
+        departments:'=',
     },
     controller: function(DepartmentService){
 
+        this.inputError = false;
+        this.departmentNameBusyError = DepartmentService.departmentNameBusyError;
+
         this.addDepartment = function(){
-            console.log(this.departmentName, this.departmentSalary, this.departmentType);
             if(this.departmentName !== undefined && this.departmentSalary !== undefined && this.departmentType !== undefined){
-                DepartmentService.addDepartment(this.departmentName, {name: this.departmentName, salary: this.departmentSalary, type: this.departmentType});
-                this.onUpdate();
+                let department = {name: this.departmentName, salary: this.departmentSalary, type: this.departmentType};
+                DepartmentService.addDepartment(department);
+                this.departmentName = undefined;
+                this.departmentSalary = undefined;
+                this.departmentType = undefined;
+                this.inputError = false;
+            } else {
+                this.inputError = true;
             }
         }
     }

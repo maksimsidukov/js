@@ -1,10 +1,10 @@
 app.component('adminDashboard', {
     templateUrl:'templates/components/adminDashboard.html',
-    controller: function(StaffService){
+    controller: function(StaffService, DepartmentService){
 
-        this.employedStaffList = StaffService.downloadEmployedStaff().slice(-5);
+        this.employedStaffList = StaffService.arrangeStaff.slice(-5);
 
-        this.departmentsList = StaffService.downloadDepartmentsList();
+        this.departmentsList = DepartmentService.departmentsList;
 
         this.updateEmployedStaffList = function(){
             this.employedStaffList = StaffService.downloadEmployedStaff().slice(-5);

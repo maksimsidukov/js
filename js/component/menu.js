@@ -1,13 +1,13 @@
 app.component('menu', {
     templateUrl:'templates/components/menu.html',
-    controller: function(MainService, DepartmentService){
+    controller: function(LoginService, DepartmentService){
 
         this.isLogin = function(){
-            return MainService.isLogin();
+            return LoginService.isLogin();
         };
 
         this.isAdmin = function(){
-            return MainService.isAdmin();
+            return LoginService.isAdmin();
         };
 
         this.isAccountant = function(){
@@ -19,7 +19,7 @@ app.component('menu', {
         };
 
         this.logout = function(){
-            MainService.logout();
+            LoginService.logout();
         }
     }
 });

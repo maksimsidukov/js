@@ -1,33 +1,29 @@
 app.component('instanceEmployee',{
     templateUrl: 'templates/components/instanceEmployee.html',
     bindings:{
-        staff:'=',
+        employee:'=',
         departments:'=',
-        onUpdate:'&',
-        isArrange:'='
+        isArrange:'=',
     },
-    controller: function(StaffService, MainService){
+    controller: function(StaffService, LoginService){
 
 
-        this.changeDepartment = function(staffName, departmentName){
-            if(departmentName !== undefined){
-                StaffService.arrangeEmployee(staffName, departmentName);
-                this.onUpdate();
+        this.changeDepartment = function(employee, department){
+            if(department !== undefined){
+                StaffService.arrangeEmployee(employee, department);
             }
         };
 
-        this.dismissEmployee = function(name){
-            StaffService.dismissEmployee(name);
-            this.onUpdate();
+        this.dismissEmployee = function(employee){
+            StaffService.dismissEmployee(employee);
         };
 
-        this.deleteEmployee = function(name){
-            StaffService.deleteEmployee(name);
-            this.onUpdate();
+        this.deleteEmployee = function(employee){
+            StaffService.deleteEmployee(employee);
         };
 
         this.isAdmin = function(){
-            return MainService.isAdmin();
+            return LoginService.isAdmin();
         }
 
     }

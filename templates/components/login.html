@@ -2,11 +2,14 @@
     <md-card-title layout="row" layout-align="center center">
         <md-input-container>
             <label>Логин</label>
-            <input ng-model="$ctrl.userLogin">
+            <input required ng-model="$ctrl.userLogin">
+            <div ng-messages="error" ng-show="$ctrl.loginError">
+                <span class="errorMessage">Логин или пароль неверный!</span>
+            </div>
         </md-input-container>
         <md-input-container>
             <label>Пароль</label>
-            <input ng-model="$ctrl.userPassword">
+            <input required ng-model="$ctrl.userPassword">
         </md-input-container>
 
     </md-card-title>

@@ -8,8 +8,6 @@ function checkLoginAndAccess(){
     }
 }
 
-
-
 app.config(function($stateProvider, $urlRouterProvider){
 
     $urlRouterProvider.otherwise("/login");
@@ -50,8 +48,8 @@ app.config(function($stateProvider, $urlRouterProvider){
         .state('employed', {
             url: '/employed',
             templateUrl : 'templates/pages/listEmployedPage.html',
-            controller: function($state,MainService, DepartmentService){
-                if(MainService.isAdmin()){
+            controller: function($state, LoginService, DepartmentService){
+                if(LoginService.isAdmin()){
                 } else if (JSON.parse(localStorage.getItem('loginUser')).department === null){
                     $state.go("login")
                 } else if (!DepartmentService.isAccountant((JSON.parse(localStorage.getItem('loginUser')).department.name))){
